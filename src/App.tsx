@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import 'antd/dist/antd.css';
+import { Col, Row, Typography } from 'antd';
+import Discount from './components/Discount';
+import Cart from './components/Cart';
+import Product from './components/Product';
 
-function App() {
+const App = () => {
+  const { Title } = Typography;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <Row className="row" justify="center">
+      <Col span={24}>
+        {' '}
+        <Title>E-commerce</Title>
+      </Col>
+      <Col span={24}>
+        <Row>
+          <Col span={6} offset={1}><Product /></Col>
+          <Col span={6} offset={1}><Cart /></Col>
+          <Col span={6} offset={1}><Discount /></Col>
+        </Row>
+      </Col>
 
+    </Row>
+  );
+};
 export default App;
