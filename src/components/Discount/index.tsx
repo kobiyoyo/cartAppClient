@@ -1,10 +1,19 @@
 import React from 'react';
 import { Col, Row, Typography } from 'antd';
-import ListView from '../../utils/List';
+import DiscountList from './DIscountList';
 
 const Discount = () => {
   const { Title } = Typography;
-  const rawData = [{}, {}];
+  const rawData = [{
+    name: 'DiscountPerPriceService',
+    quantity: 3,
+    description: 'buy 3 or more strawberries, the price should drop to 4.50',
+  },
+  {
+    name: 'DiscountPerTotalService',
+    quantity: 3,
+    description: 'buy 3 or more coffees, the price of all coffees should drop to 2/3 of the original price.',
+  }];
   return (
     <Row>
       <Col span="24">
@@ -13,7 +22,7 @@ const Discount = () => {
         {' '}
       </Col>
       <Col span="24">
-        <ListView data={rawData} />
+        <DiscountList data={rawData} />
       </Col>
     </Row>
 
