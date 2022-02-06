@@ -1,46 +1,34 @@
-# Getting Started with Create React App
+# Cart App FrontEnd
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+##### Description
+The app gives users the ability to view products and add to their carts, they also have the ability choose a discount upon creation of that product. Once the product is in the cart users can add or subtract quantities of each product and the discount will be reflected immediately upon quantity change .
+The Downside to this application is that since a state management framework like redux it wasnt possible because of time to have data in one object for each components.Another is that since no routing framework was used if you click on certain event when the resource hasn't loaded fully you get an error.
 
-## Available Scripts
 
-In the project directory, you can run:
+##### How to use
+```
+yarn install
+```
 
-### `yarn start`
+```
+yarn start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+##### Test
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+yarn run cypress:open
+```
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies Used
+- Typescript for type checking
+- Antd is a UI library 
+- Eslint
+- Yulp
 
-### `yarn build`
+## Requirements
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [x] The CEO is a big fan of buy-one-get-one-free offers and green tea. He wants us to add a rule to do this.
+- [x] The COO, though, likes low prices and wants people buying strawberries to get a price discount for bulk purchases. If you buy 3 or more strawberries, the price should drop to 4.50€.
+- [x] The VP of Engineering is a coffee addict. If you buy 3 or more coffees, the price of all coffees should drop to 2/3 of the original price.
