@@ -18,7 +18,8 @@ class HttpRequestService implements HttpRequestServiceProps {
     const requestOptions = {
       method: 'GET',
     };
-    return fetch(`${this.baseUrl}/${this.resource}/${id}`, requestOptions);
+    const checkId = id || '';
+    return fetch(`${this.baseUrl}/${this.resource}/${checkId}`, requestOptions);
   }
 
   async post<T>(body: T) {
@@ -43,6 +44,7 @@ class HttpRequestService implements HttpRequestServiceProps {
     const requestOptions = {
       method: 'DELETE',
     };
+    console.log(`${this.baseUrl}/${this.resource}/${id}`);
     return fetch(`${this.baseUrl}/${this.resource}/${id}`, requestOptions);
   }
 }
