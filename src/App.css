@@ -1,3 +1,16 @@
 *{
-  border:1px solid red;
+  box-sizing: border-box;
+  /* border:1px solid red; */
+}
+
+
+.total{
+  display: flex;
+  flex-direction:row;
+  justify-content: space-around;
+  width: 150px;
+}
+
+.total input{
+  width: 40px;
 }
