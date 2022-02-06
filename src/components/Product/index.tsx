@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row, Typography } from 'antd';
 import ProductForm from './ProductForm';
 import ProductList from './ProductList';
+import { ProductProps } from './types';
+import ProductService from '../../services/ProductService';
+import CartService from '../../services/CartService';
 
 const Product = () => {
   const { Title } = Typography;
-  const rawData = [{
-    name: 'Coffee',
-    code: 'GL2',
-    price: 3.11,
-  }, {
-    name: 'Strawberries',
-    code: 'CL2',
-    price: 5.0,
-  }];
+  const [cartIds, setCartIds] = useState<number[]>([]);
+  const [productData, setProductData] = useState<ProductProps[]>([]);
+  const getProducts = async () => {
+    const response = await ProductService.getAll();
+    setProductData(response);
+  };
+  const getCartIds = async () => {
+    const response = await CartService.getAll();
+    const data = response.map((cart:{ product: { id: number }}) => cart.product.id);
+    setCartIds(data);
+  };
+  useEffect(() => { getProducts(); getCartIds(); }, []);
   return (
     <Row>
       <Col span="24">
@@ -25,7 +31,7 @@ const Product = () => {
         <ProductForm />
       </Col>
       <Col span="24">
-        <ProductList data={rawData} />
+        <ProductList data={productData} cartIds={cartIds} />
       </Col>
     </Row>
 

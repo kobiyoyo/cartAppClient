@@ -4,10 +4,13 @@ export type ProductFormValues = {
     code: string,
     discountId: number | null,
 };
-
+export type ProductProps = {
+    id: number,
+    name: string
+    price: number
+    code: string
+}
 export type ProductListProps = {
-    data: {
-        name: string
-        price: number
-    }[]
+    data: ProductProps[]
+    cartIds: number[]
 };
