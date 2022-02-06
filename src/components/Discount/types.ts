@@ -1,7 +1,10 @@
+export type DiscountProps = {
+    id: number
+    name: string;
+    description: string;
+    quantity: number;
+}
+
 export type DiscountListProps = {
-    data:{
-       name: string;
-       description: string;
-       quantity: number;
-    }[]
+    data:DiscountProps[]
    }
