@@ -22,6 +22,10 @@ const CartList = ({ data }: CartListProps) => {
     OrderItemService.update({ quantity: newQuantity }, itemId);
     window.location.reload();
   };
+  const cartTotalSum = data.map((product) => +product.total).reduce((a, b) => a + b, 0);
+  const cartSubTotalSum = data.map((product) => +product.sub_total).reduce((a, b) => a + b, 0);
+
+  console.log(cartTotalSum);
   return (
     <>
       <List
@@ -70,8 +74,20 @@ const CartList = ({ data }: CartListProps) => {
         )}
       />
       <Row>
-        <Col span="12"><h1>SubTotal: 23</h1></Col>
-        <Col span="12"><h1>Total: 23</h1></Col>
+        <Col span="12">
+          <h1>
+            SubTotal:$
+            {' '}
+            {cartSubTotalSum}
+          </h1>
+        </Col>
+        <Col span="12">
+          <h1>
+            Total:$
+            {' '}
+            {cartTotalSum}
+          </h1>
+        </Col>
       </Row>
     </>
   );
