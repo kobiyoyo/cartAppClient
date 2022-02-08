@@ -3,23 +3,39 @@ import { Col, Row, Typography } from 'antd';
 import ProductForm from './ProductForm';
 import ProductList from './ProductList';
 import { ProductProps } from './types';
-import ProductService from '../../services/ProductService';
-import CartService from '../../services/CartService';
+import { clearState, getProducts } from '../../features/ProductSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 const Product = () => {
   const { Title } = Typography;
   const [cartIds, setCartIds] = useState<number[]>([]);
   const [productData, setProductData] = useState<ProductProps[]>([]);
-  const getProducts = async () => {
-    const response = await ProductService.getAll();
-    setProductData(response);
-  };
-  const getCartIds = async () => {
-    const response = await CartService.getAll();
-    const data = response.map((cart:{ product: { id: number }}) => cart.product.id);
+  const dispatch = useAppDispatch();
+  const {
+    isSuccess, isError, errorMessage, products,
+  } = useAppSelector(
+    (state) => state.products,
+  );
+  const { carts } = useAppSelector((state) => state.carts);
+  const fetchProductData = async () => setProductData(products);
+
+  const fetchCartData = async () => {
+    const data = carts.map((cart:{ product: { id: number }}) => cart.product.id);
     setCartIds(data);
   };
-  useEffect(() => { getProducts(); getCartIds(); }, []);
+
+  useEffect(() => () => { dispatch(clearState()); }, []);
+  useEffect(() => { dispatch(getProducts()); }, []);
+  useEffect(() => {
+    if (isSuccess) {
+      fetchProductData();
+      fetchCartData();
+    }
+    if (isError) {
+      console.error(errorMessage);
+    }
+    dispatch(clearState());
+  }, [isSuccess, isError, products]);
   return (
     <Row>
       <Col span="24">
