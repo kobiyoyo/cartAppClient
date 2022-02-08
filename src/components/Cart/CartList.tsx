@@ -76,14 +76,14 @@ const CartList = ({ data }: CartListProps) => {
           <h1>
             SubTotal:$
             {' '}
-            {cartSubTotalSum}
+            {cartSubTotalSum.toFixed(2)}
           </h1>
         </Col>
         <Col span="12">
           <h1>
             Total:$
             {' '}
-            {cartTotalSum}
+            {cartTotalSum.toFixed(2)}
           </h1>
         </Col>
       </Row>
