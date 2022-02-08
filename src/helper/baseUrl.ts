@@ -1,2 +1,2 @@
 /* eslint-disable import/prefer-default-export */
-export const baseUrl = 'http://localhost:3000/api/v1';
+export const baseUrl = 'https://damp-wildwood-52301.herokuapp.com/api/v1';

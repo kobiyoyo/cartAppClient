@@ -3,58 +3,35 @@ import HttpRequestService, { HttpRequestServiceProps } from './HttpRequestServic
 import { baseUrl } from '../helper/baseUrl';
 
 class BaseService {
-  constructor(public resource: string, private http?: HttpRequestServiceProps) {
-    this.http = (new HttpRequestService(baseUrl, resource));
+  private http: HttpRequestServiceProps = new HttpRequestService(baseUrl, this.resource);
+
+  constructor(public resource: string) {
+    this.resource = resource;
   }
 
   async getAll() {
-    try {
-      const response = await this.http?.get();
-      return await response?.json();
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
+    const response = await this.http.get();
+    return response.json();
   }
 
   async get(id:number) {
-    try {
-      const response = await this.http?.get(id);
-      return await response?.json();
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
+    const response = await this.http.get(id);
+    return response.json();
   }
 
   async create<T>(body: T) {
-    try {
-      const response = await this.http?.post(body);
-      return await response?.json();
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
+    const response = await this.http.post(body);
+    return response.json();
   }
 
   async update<T>(body: T, id: number) {
-    try {
-      const response = await this.http?.patch(body, id);
-      return await response?.json();
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
+    const response = await this.http.patch(body, id);
+    return response.json();
   }
 
   async delete(id: number) {
-    try {
-      const response = await this.http?.delete(id);
-      return await response?.json();
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
+    const response = await this.http.delete(id);
+    return response.json();
   }
 }
 export default BaseService;
