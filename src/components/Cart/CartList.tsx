@@ -4,28 +4,26 @@ import {
   List, Skeleton, Button, Col, Row,
 } from 'antd';
 import { CartListProps } from './types';
-import OrderItemService from '../../services/OrderItemService';
+import { useAppDispatch } from '../../hooks/hooks';
+import { removeFromCart, updateCart } from '../../features/CartSlice';
 
 const CartList = ({ data }: CartListProps) => {
+  const dispatch = useAppDispatch();
   const handleDrop = (id: number) => {
-    OrderItemService.delete(id);
-    window.location.reload();
+    dispatch(removeFromCart({ id }));
   };
 
   const handleIncrement = (itemQuantity: number, itemId: number) => {
     const newQuantity = itemQuantity + 1;
-    OrderItemService.update({ quantity: newQuantity }, itemId);
-    window.location.reload();
+    dispatch(updateCart({ quantity: newQuantity, id: itemId }));
   };
   const handleDecrement = (itemQuantity: number, itemId: number) => {
     const newQuantity = itemQuantity - 1;
-    OrderItemService.update({ quantity: newQuantity }, itemId);
-    window.location.reload();
+    dispatch(updateCart({ quantity: newQuantity, id: itemId }));
   };
   const cartTotalSum = data.map((product) => +product.total).reduce((a, b) => a + b, 0);
   const cartSubTotalSum = data.map((product) => +product.sub_total).reduce((a, b) => a + b, 0);
 
-  console.log(cartTotalSum);
   return (
     <>
       <List

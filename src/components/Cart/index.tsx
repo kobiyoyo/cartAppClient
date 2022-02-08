@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Row, Typography } from 'antd';
 import CartList from './CartList';
-import CartService from '../../services/CartService';
-import { CartProps } from './types';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { clearState, getCarts } from '../../features/CartSlice';
+import useFilter from '../../hooks/useFetch';
 
 const Cart = () => {
   const { Title } = Typography;
-  const [cartData, setCartData] = useState<CartProps[]>([]);
-  const getCarts = async () => {
-    const response = await CartService.getAll();
-    setCartData(response);
-  };
-  useEffect(() => { getCarts(); }, []);
-
+  const {
+    isSuccess, isError, errorMessage, cart,
+  } = useAppSelector(
+    (state) => state.carts,
+  );
+  const dispatch = useAppDispatch();
+  useEffect(() => () => { dispatch(clearState()); }, []);
+  useEffect(() => { dispatch(getCarts()); }, []);
+  const [cartData] = useFilter(cart, isError, isSuccess, errorMessage);
   return (
     <Row>
       <Col span="24">

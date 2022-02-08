@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Formik } from 'formik';
@@ -13,19 +14,24 @@ import {
 } from 'formik-antd';
 import * as Yup from 'yup';
 import { InputFormField, InputNumField } from '../../utils/InputFormField';
-import { DiscountProps } from '../Discount/types';
-import DiscountService from '../../services/DiscountService';
-import ProductService from '../../services/ProductService';
 import { toSnakeCase } from '../../helper/caseConverter';
 import { ProductProps } from './types';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { addProduct } from '../../features/ProductSlice';
+import { clearState, getDiscounts } from '../../features/DiscountSlice';
+import useFilter from '../../hooks/useFetch';
 
 const ProductForm = () => {
   const { Option } = Select;
-  const [discountData, setDiscountData] = useState<DiscountProps[]>([]);
-  const getDiscounts = async () => {
-    const response = await DiscountService.getAll();
-    setDiscountData(response);
-  };
+  const {
+    isSuccess, isError, errorMessage, discounts,
+  } = useAppSelector(
+    (state) => state.discounts,
+  );
+  const dispatch = useAppDispatch();
+  useEffect(() => () => { dispatch(clearState()); }, []);
+  useEffect(() => { dispatch(getDiscounts()); }, []);
+  const [discountData] = useFilter(discounts, isError, isSuccess, errorMessage);
   const discountOptions = discountData.map((discount) => (
     <Option key={discount.id} value={discount.id}>{discount.name}</Option>));
 
@@ -48,10 +54,14 @@ const ProductForm = () => {
     values: ProductProps,
     actions: { setSubmitting: (str: boolean) => void, resetForm: () => void},
   ) => {
-    ProductService.create(toSnakeCase(values));
+    const {
+      name, price, code, discount_id,
+    } = toSnakeCase(values);
+    dispatch(addProduct({
+      name, price, code, discount_id,
+    }));
     actions.setSubmitting(false);
     actions.resetForm();
-    window.location.reload();
   };
 
   useEffect(() => { getDiscounts(); }, []);

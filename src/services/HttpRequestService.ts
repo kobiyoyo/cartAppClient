@@ -44,7 +44,6 @@ class HttpRequestService implements HttpRequestServiceProps {
     const requestOptions = {
       method: 'DELETE',
     };
-    console.log(`${this.baseUrl}/${this.resource}/${id}`);
     return fetch(`${this.baseUrl}/${this.resource}/${id}`, requestOptions);
   }
 }

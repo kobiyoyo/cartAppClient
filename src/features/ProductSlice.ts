@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
 /* eslint-disable consistent-return */
 /* eslint-disable import/prefer-default-export */
@@ -15,9 +16,15 @@ const initialState = {
 
 export const addProduct = createAsyncThunk(
   'product/addProduct',
-  async (body, thunkApi) => {
+  async ({
+    name, price, code, discount_id,
+  }: { name: string, price: number, code: string
+    discount_id: number }, thunkApi) => {
     try {
-      const response = ProductService.create(body);
+      const data = {
+        name, price, code, discount_id,
+      };
+      const response = ProductService.create(data);
       return response;
     } catch (e) {
       console.log('Error', e);

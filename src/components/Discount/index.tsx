@@ -4,15 +4,21 @@ import { Col, Row, Typography } from 'antd';
 import DiscountList from './DiscountList';
 import { DiscountProps } from './types';
 import DiscountService from '../../services/DiscountService';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import useFilter from '../../hooks/useFetch';
+import { clearState, getDiscounts } from '../../features/DiscountSlice';
 
 const Discount = () => {
   const { Title } = Typography;
-  const [discountData, setDiscountData] = useState<DiscountProps[]>([]);
-  const getDiscounts = async () => {
-    const response = await DiscountService.getAll();
-    setDiscountData(response);
-  };
-  useEffect(() => { getDiscounts(); }, []);
+  const {
+    isSuccess, isError, errorMessage, discounts,
+  } = useAppSelector(
+    (state) => state.discounts,
+  );
+  const dispatch = useAppDispatch();
+  useEffect(() => () => { dispatch(clearState()); }, []);
+  useEffect(() => { dispatch(getDiscounts()); }, []);
+  const [discountData] = useFilter(discounts, isError, isSuccess, errorMessage);
   return (
     <Row>
       <Col span="24">

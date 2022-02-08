@@ -3,12 +3,13 @@ import {
   List, Skeleton, Button,
 } from 'antd';
 import { ProductListProps } from './types';
-import OrderItemService from '../../services/OrderItemService';
+import { addToCart } from '../../features/CartSlice';
+import { useAppDispatch } from '../../hooks/hooks';
 
 const ProductList = ({ data, cartIds }: ProductListProps) => {
+  const dispatch = useAppDispatch();
   const handleAddToCart = (id: number) => {
-    OrderItemService.create({ product_id: id });
-    window.location.reload();
+    dispatch(addToCart({ product_id: id }));
   };
   return (
     <List

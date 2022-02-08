@@ -1,41 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Row, Typography } from 'antd';
 import ProductForm from './ProductForm';
 import ProductList from './ProductList';
-import { ProductProps } from './types';
 import { clearState, getProducts } from '../../features/ProductSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { getCarts } from '../../features/CartSlice';
+import useFilter from '../../hooks/useFetch';
 
 const Product = () => {
   const { Title } = Typography;
-  const [cartIds, setCartIds] = useState<number[]>([]);
-  const [productData, setProductData] = useState<ProductProps[]>([]);
   const dispatch = useAppDispatch();
   const {
     isSuccess, isError, errorMessage, products,
   } = useAppSelector(
     (state) => state.products,
   );
-  const { carts } = useAppSelector((state) => state.carts);
-  const fetchProductData = async () => setProductData(products);
-
-  const fetchCartData = async () => {
-    const data = carts.map((cart:{ product: { id: number }}) => cart.product.id);
-    setCartIds(data);
-  };
+  const {
+    cart, isError: isCartError, isSuccess: isCartSuccess, errorMessage: errorCartMessage,
+  } = useAppSelector((state) => state.carts);
 
   useEffect(() => () => { dispatch(clearState()); }, []);
-  useEffect(() => { dispatch(getProducts()); }, []);
-  useEffect(() => {
-    if (isSuccess) {
-      fetchProductData();
-      fetchCartData();
-    }
-    if (isError) {
-      console.error(errorMessage);
-    }
-    dispatch(clearState());
-  }, [isSuccess, isError, products]);
+  useEffect(() => { dispatch(getProducts()); dispatch(getCarts()); }, []);
+  const [productData] = useFilter(products, isError, isSuccess, errorMessage);
+  const [cartData] = useFilter(cart, isCartError, isCartSuccess, errorCartMessage);
+  const cartIds = cartData.map((item:{ product: { id: number }}) => item.product.id);
+
   return (
     <Row>
       <Col span="24">
