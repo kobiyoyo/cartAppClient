@@ -2,7 +2,6 @@
 
 ##### Description
 The app gives users the ability to view products and add to their carts, they also have the ability choose a discount upon creation of that product. Once the product is in the cart users can add or subtract quantities of each product and the discount will be reflected immediately upon quantity change .
-The Downside to this application is that since a state management framework like redux wasn't used it wasn't possible because of time constraint to have data in one object for each components, where if added it reflects immediately.Another is that since no routing framework was used if you click on a certain event when the resource hasn't loaded fully you get an error.
 
 
 ##### How to use
